@@ -11,22 +11,20 @@
 MEMBER 테이블의 내용
 <table width="100%" border ="1">
 <tr>
-	<td>empno</td> <td>ename</td> <td>job</td>
+	<td>이름</td> <td>아이디</td> <td>이메일</td>
 </tr>
 <% 
 	//jdbc 드라이버 로딩
-	Class.forName("oracle.jdbc.driver.OracleDriver");
+	
 	Connection conn = null;
 	Statement stmt = null;
 	ResultSet rs = null;
 	
 	try{
-	    String jdbcDriver = "jdbc:oracle:thin:@localhost:1521:orcl";
-	    String dbUser = "scott";
-	    String dbPass = "1111";
-	    String query = "select empno,ename,job from emp";
+	    String jdbcDriver = "jdbc:apache:commons:dbcp:dbpool";
+	    String query = "select * from MEMBER order by MEMBERID";
 	    // 2. db 커넥션 생성
-	    conn = DriverManager.getConnection(jdbcDriver, dbUser,dbPass);
+	    conn = DriverManager.getConnection(jdbcDriver);
 	    // 3.Statement 생성
 	    stmt = conn.createStatement();
 	    // 4. 쿼리 실행
@@ -36,9 +34,9 @@ MEMBER 테이블의 내용
 	    {
 	        %>
 	      	<tr>
-				<td><%=rs.getInt("empno") %></td> 
-				<td><%=rs.getString("ename") %></td>
-				<td><%=rs.getString("job") %></td>
+				<td><%=rs.getString("NAME") %></td> 
+				<td><%=rs.getString("MEMBERID") %></td>
+				<td><%=rs.getString("EMAIL") %></td>
 			</tr>
 	        <% 
 	    }

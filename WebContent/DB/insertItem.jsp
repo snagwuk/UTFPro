@@ -27,7 +27,7 @@
         
         pstmtITem = conn.prepareStatement("insert into ITEM values(?,?)");
         pstmtITem.setInt(1,id);
-        pstmtITem.setString(2,"상세 설명 " +id);
+        pstmtITem.setString(2,"상품 이름 " +id);
         pstmtITem.executeUpdate();
         
         if(request.getParameter("error") != null)
