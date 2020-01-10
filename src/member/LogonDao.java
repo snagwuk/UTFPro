@@ -59,4 +59,32 @@ public class LogonDao
             if(conn != null) try{ conn.close();} catch(SQLException ex) {}
         }
     }
+    
+    public int confirmId(String id) throws Exception 
+    {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int x = -1;
+        
+        try{
+            conn = getConnection();
+            pstmt = conn.prepareStatement("select id from member where id = ?");
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+            
+            if(rs.next())
+                x= 1;
+            else
+                x= -1;
+           
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }finally{
+            if (rs !=null) try{rs.close();} catch(SQLException ex) {}
+            if (pstmt !=null) try{pstmt.close();} catch(SQLException ex) {}
+            if (conn !=null) try{conn.close();} catch(SQLException ex) {}
+        }
+        return x;
+    }
 }
