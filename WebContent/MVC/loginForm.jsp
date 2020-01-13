@@ -30,7 +30,8 @@ function begin()
 </script>
 
 </head>
-<body onload="begin()">
+<!-- <body onload="begin()"> -->
+<body >
 <div > 
 <form method = "post" action="login.jsp" name= "myform" onSubmit="return checkIt()" >
 	<table width="600" border ="1" cellpadding="0" cellspacing="3" align="center" > 

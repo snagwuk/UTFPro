@@ -56,7 +56,7 @@ function checkIt()
 				return;
 			}
 		
-		url = "confirmId.jsp?id=" + userinput.id.value ;
+		url = "<%=request.getContextPath() %>/nohead/confirmId.jsp?id=" + userinput.id.value ;
 		
 		open(url, "confirm","toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=300,height=200");
 	}
@@ -65,46 +65,46 @@ function checkIt()
 </head>
 <body>
 <form method = "post" action="input.jsp" name= "userinput" onSubmit="return checkIt()" >
-	<table width="600" border ="1" cellpadding="0" cellspacing="3" align="center" > 
+	<table width="800" border ="1" cellpadding="0" cellspacing="3" align="center" > 
 		<tr> 
 			<td colspan="2" height="39" align="center"> <font size="+1"/><b>회원가입</b></font></td>
 		</tr>
 		<tr> 
-			<td width="200"> <b>계정정보 입력</b></td>
-			<td width="400"> &nbsp;</td>
+			<td colspan="2" width="300"> <b>계정정보 입력</b></td>
+			
 		</tr>
 		<tr> 
-			<td width="200"> 사용자 ID</td>
+			<td width="300"> 사용자 ID</td>
 			<td width="400"> <input type="text" name= "id" size="10" maxlength="12">
 			<input type="button" value="ID중복확인" name="confirm_id" OnClick="openConfirmid(this.form)"></td>
 		</tr>
 		<tr> 
-			<td width="200"> 비밀번호</td>
+			<td width="300"> 비밀번호</td>
 			<td width="400"> <input type="password" name="passwd" size="15" maxlength="12"></td>
 		</tr>
 		<tr> 
-			<td width="200"> 비밀번호 확인</td>
+			<td width="300"> 비밀번호 확인</td>
 			<td width="400"> <input type="password" name= "passwd2" size="15" maxlength="12"></td>
 		</tr>
 		<tr> 
-			<td width="200"> <b>개인정보 입력</b></td>
-			<td width="400"> &nbsp;</td>
+			<td colspan="2" width="300" > <b>개인정보 입력</b></td>
+			
 		</tr>
 		<tr> 
-			<td width="200"> 사용자 이름</td>
+			<td width="300"> 사용자 이름</td>
 			<td width="400"> <input type="text" name= "name" size="15" maxlength="10"></td>
 		</tr>
 		<tr> 
-			<td width="200"> 주민등록 번호</td>
+			<td width="300"> 주민등록 번호</td>
 			<td width="400"> <input type="text" name= "jumin1" size="7" maxlength="6">
-			-<input type="text" name= "jumin2" size="7" maxlength="6"></td>
+			<input type="text" name= "jumin2" size="7" maxlength="6"></td>
 		</tr>
 		<tr> 
-			<td width="200"> E-Mail</td>
+			<td width="300"> E-Mail</td>
 			<td width="400"> <input type="text" name= "email" size="40" maxlength="30"></td>
 		</tr>
 		<tr> 
-			<td width="200"> Blog</td>
+			<td width="300"> Blog</td>
 			<td width="400"> <input type="text" name= "blog" size="60" maxlength="50"></td>
 		</tr>
 		<tr> 

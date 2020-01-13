@@ -7,7 +7,9 @@
 request.setCharacterEncoding("UTF-8");
 String id = request.getParameter("id");
 String passwd = request.getParameter("passwd");
+
 LogonDao manager = LogonDao.getInstance();
+int check = manager.userCheck(id,passwd);
 
 %>
 <html>
@@ -16,6 +18,27 @@ LogonDao manager = LogonDao.getInstance();
 <title>Insert title here</title>
 </head>
 <body>
+<% if(check==1) {
+    session.setAttribute("memId", id);
+	//response.sendRedirect("main.jsp");
+    response.sendRedirect(request.getContextPath()+"/MVC/main.jsp");
+}
+else if (check == 0) {
+%>
+<script type="text/javascript">
+	alert("비밀번호가 맞지않습니다.");
+	history.go(-1);
+</script>
+<%
+} else {
+%>
 
+<script type="text/javascript">
+	alert("아이디가 맞지않습니다.");
+	history.go(-1);
+</script>
+<%
+} 
+%>
 </body>
 </html>
