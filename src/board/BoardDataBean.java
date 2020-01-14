@@ -39,6 +39,12 @@ public class BoardDataBean
     ip varchar(20) not null,
     filename varchar(30),
     filesize int);
+    
+    create sequence BoardSer
+start wuth 1
+increment by 1
+nomaxvalue;
+
     */
     @Override
     public String toString()

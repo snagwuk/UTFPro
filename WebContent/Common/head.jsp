@@ -28,8 +28,8 @@ window.onload = function()
 <div class="w3-bar w3-green w3-Large">
 <a href="<%=request.getContextPath() %>/MVC/main.jsp" class="w3-bar-item w3-button"> HOME </a>
 <a href="<%=request.getContextPath() %>/MVC/index.jsp" class="w3-bar-item w3-button"> 공지사항 </a>
-<a href="<%=request.getContextPath() %>/2#" class="w3-bar-item w3-button"> 자유게시판 </a>
-<a href="<%=request.getContextPath() %>/3#" class="w3-bar-item w3-button"> Q&A </a>
+<a href="<%=request.getContextPath() %>/Board/list.jsp" class="w3-bar-item w3-button"> 자유게시판 </a>
+<a href="<%=request.getContextPath() %>/Board/writeForm.jsp" class="w3-bar-item w3-button"> Q&A </a>
 <a href="<%=request.getContextPath() %>/MVC/inputForm.jsp" class="w3-bar-item w3-button"> 회원가입 </a>
 <a href="<%=request.getContextPath() %>/#" class="w3-bar-item w3-button"> BarGraph </a>
 <a href="<%=request.getContextPath() %>/#" class="w3-bar-item w3-button"> WordCloud </a>

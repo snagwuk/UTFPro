@@ -29,18 +29,7 @@ public class LogonDao
         try
         {
             conn = getConnection();
-        /*   db table 생성 쿼리 
-          create table member(
-                    id varchar(12) primary key,
-                    passwd varchar(12) not null,
-                    name varchar(10) not null,
-                    jumin1 varchar(6) not null,
-                    jumin2 varchar(7) not null,
-                    email varchar(30) not null,
-                    blog varchar(50) not null,
-                    reg_date date not null
-                    );
-                    */
+        
             pstmt = conn.prepareStatement("insert into MEMBER values (?,?,?,?,?,?,?,?)");
             pstmt.setString(1, member.getId());
             pstmt.setString(2, member.getPasswd());

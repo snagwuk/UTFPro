@@ -10,10 +10,10 @@
 <p class="w3-left" style="padding-left:30px;">
 <div class="w3-container">
 <b>글쓰기</b><br>
-<form method = "post" action="write.jsp" name= "writeForm" >
+<form method = "post" action="<%=request.getContextPath() %>/Board/write.jsp" name= "writeForm" >
 	<table class="w3-table-all" style="width:70%;" > 
 		<tr> 
-			<td colspan="2"  align="right"> <a href="list.jsp">글목록</a></td>
+			<td colspan="2"  align="right"> <a href="<%=request.getContextPath() %>/Board/list.jsp">글목록</a></td>
 		</tr>
 		<tr> 
 			<td  align="center" width="70"> 이름</td>
@@ -36,10 +36,10 @@
 			<td width="330"> <input type="password" size="8" maxlength="12" name="passwd">		</td>
 		</tr>
 		<tr> 
-			<td colspan="2" align="center">
+			<td colspan="2" style="text-align:center;" >
 			<input type="submit" name= "confirm" value="글 쓰 기" >
 			<input type="reset" name= "reset" value="다시작성" >
-			<input type="button" value="목록보기" OnClick="window.location='list.jsp'" >
+			<input type="button" value="목록보기" OnClick="window.location='<%=request.getContextPath() %>/Board/list.jsp'" >
 			</td>
 		</tr>
 

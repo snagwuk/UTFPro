@@ -12,6 +12,20 @@ public class LogonDataBean
     private String email;
     private String blog;
     private Timestamp reg_date;
+    
+    /*   db table 생성 쿼리 
+    create table member(
+              id varchar(12) primary key,
+              passwd varchar(12) not null,
+              name varchar(10) not null,
+              jumin1 varchar(6) not null,
+              jumin2 varchar(7) not null,
+              email varchar(30) not null,
+              blog varchar(50) not null,
+              reg_date date not null
+              );
+              */
+    
     public String toString()
     {
         return "LogonDataBean [id=" + id + ", passwd=" + passwd + ", name="
