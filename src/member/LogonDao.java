@@ -164,7 +164,7 @@ public class LogonDao
         }
         return member;
     }
-    
+
     public void updateMember(LogonDataBean member) throws Exception 
     {
         Connection conn = null;
@@ -188,5 +188,43 @@ public class LogonDao
         }
     }
     
+    public int deleteMember(String id, String passwd) throws Exception 
+    {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String dbpasswd="";
+        int x = 0;
+        try
+        {
+            conn = getConnection();
+            pstmt = conn.prepareStatement("select passwd from member where id = ?");
+            pstmt.setString(1, id);
+       
+            rs =  pstmt.executeQuery();
+            
+            if(rs.next())
+            {
+                  dbpasswd = rs.getString("passwd");
+                  if(dbpasswd.equals(passwd))
+                  {
+                      pstmt = conn.prepareStatement("delete from MEMBER where id = ? ");
+                      pstmt.setString(1, id);
+                      x = pstmt.executeUpdate();
+                  }
+                  else
+                      x = 0;
+            }
+            else
+                x= -1;
+            
+        }catch (Exception ex) {
+           ex.printStackTrace();
+        }finally {
+            if(pstmt != null) try{ pstmt.close();} catch(SQLException ex) {}
+            if(conn != null) try{ conn.close();} catch(SQLException ex) {}
+        }
+        return x;
+    }
    
 }

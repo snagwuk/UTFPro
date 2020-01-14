@@ -15,6 +15,10 @@
   <url-pattern>/MVC/*</url-pattern>
   <include-prelude>/Common/head.jsp</include-prelude>
   </jsp-property-group>
+   <jsp-property-group>
+  <url-pattern>/Board/*</url-pattern>
+  <include-prelude>/Common/head.jsp</include-prelude>
+  </jsp-property-group>
   </jsp-config>
   
   

@@ -56,7 +56,7 @@ function checkIt()
 				return;
 			}
 		
-		url = "<%=request.getContextPath() %>/nohead/confirmId.jsp?id=" + userinput.id.value ;
+		url = "<%=request.getContextPath() %>/MVC-Nohead/confirmId.jsp?id=" + userinput.id.value ;
 		
 		open(url, "confirm","toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=300,height=200");
 	}

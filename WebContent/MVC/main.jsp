@@ -26,6 +26,8 @@
 	<form method="post" action="logout.jsp">
 	<input type="submit" value="로그아웃"> 
 	<input type="button" value="회원정보변경 " onclick="javascript:window.location='<%=request.getContextPath() %>/MVC/modifyForm.jsp'">
+	<input type="button" value="회원정보삭제 " onclick="javascript:window.location='<%=request.getContextPath() %>/MVC/deleteForm.jsp'">
+	
 	</form>
 	</td>
 	
