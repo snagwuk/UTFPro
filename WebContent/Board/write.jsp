@@ -16,11 +16,12 @@
 <jsp:setProperty name="article" property="*"/>
 </jsp:useBean>
 <%
-	article.setBoardid("1");
+	article.setBoardid((String)session.getAttribute("boardid"));
 	article.setIp(request.getRemoteAddr());
 	article.setReg_date(new Timestamp(System.currentTimeMillis()));
 	BoardDao service = BoardDao.getInstance();
 	service.insertArticle(article);
+	response.sendRedirect("list.jsp");
 %>
 
 </body>

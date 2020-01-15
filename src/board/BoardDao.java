@@ -69,12 +69,12 @@ public class BoardDao
     {
         Connection conn = null;
         PreparedStatement pstmt = null;
+        
         ResultSet rs = null;
         int count = 0 ;
         try
         {
             conn = getConnection();
-            
             pstmt = conn.prepareStatement("select nvl(count(*),0) from board where boardid = ?");
             pstmt.setString(1, boardid);
             rs = pstmt.executeQuery();
@@ -92,7 +92,7 @@ public class BoardDao
         return count;
         
     }
-    public List<BoardDataBean> getArticle(String boardid)
+    public List<BoardDataBean> getArticle(int startRow,int endRow,String boardid)
     {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -102,31 +102,42 @@ public class BoardDao
         {
             conn = getConnection();
             
-            pstmt = conn.prepareStatement("select * from board where boardid = ?");
+            //pstmt = conn.prepareStatement("select * from board where boardid = ?");
+            String sql = " select * from( "
+                    + " select rownum rnum, a.* from( "
+                    + " select * from board where boardid=? order by num desc) a) "
+                    + " where rnum between ? and ? ";
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, boardid);
+            pstmt.setInt(2, startRow);
+            pstmt.setInt(3, endRow);
             rs = pstmt.executeQuery();
-            while(rs.next())   
+            
+            if(rs.next())
             {
-                articleList = new ArrayList();
-                    BoardDataBean temp = new BoardDataBean();
-                    temp.setNum(rs.getInt("num"));
-                    temp.setBoardid(rs.getString("boardid"));
-                    temp.setWriter(rs.getString("writer"));
-                    temp.setEmail(rs.getString("email"));
-                    temp.setSubject(rs.getString("subject"));
-                    temp.setPasswd(rs.getString("passwd"));
-                    temp.setReg_date(rs.getTimestamp("reg_date"));
-                    temp.setReadcount(rs.getInt("readcount"));
-                    temp.setRef(rs.getInt("ref"));
-                    temp.setRe_step(rs.getInt("re_step"));
-                    temp.setRe_level(rs.getInt("re_level"));
-                    temp.setContent(rs.getString("content"));
-                    temp.setIp(rs.getString("ip"));
-                    temp.setFilename(rs.getString("filename"));
-                    temp.setFilesize(rs.getInt("filesize"));
-                    articleList.add(temp);
-                
+                articleList = new ArrayList<BoardDataBean>();
+             do{
+                 BoardDataBean temp = new BoardDataBean();
+                 temp.setNum(rs.getInt("num"));
+                 temp.setBoardid(rs.getString("boardid"));
+                 temp.setWriter(rs.getString("writer"));
+                 temp.setEmail(rs.getString("email"));
+                 temp.setSubject(rs.getString("subject"));
+                 temp.setPasswd(rs.getString("passwd"));
+                 temp.setReg_date(rs.getTimestamp("reg_date"));
+                 temp.setReadcount(rs.getInt("readcount"));
+                 temp.setRef(rs.getInt("ref"));
+                 temp.setRe_step(rs.getInt("re_step"));
+                 temp.setRe_level(rs.getInt("re_level"));
+                 temp.setContent(rs.getString("content"));
+                 temp.setIp(rs.getString("ip"));
+                 temp.setFilename(rs.getString("filename"));
+                 temp.setFilesize(rs.getInt("filesize"));
+                 articleList.add(temp);
+                 
+             }while(rs.next());   
             }
+            
         }catch (Exception ex) {
            ex.printStackTrace();
         }finally {
@@ -136,5 +147,58 @@ public class BoardDao
         }
         
         return articleList;
+    }
+    
+    public BoardDataBean getArticle(int num)
+    {
+        
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        BoardDataBean temp = null;
+        try
+        {
+            conn = getConnection();
+            
+            //조회수 카운트 증가
+            pstmt = conn.prepareStatement("update board set readcount = readcount + 1 where num = ?");
+            pstmt.setInt(1, num);
+            pstmt.executeUpdate();
+            
+            pstmt = conn.prepareStatement("select * from board where num = ?");
+            pstmt.setInt(1, num);
+            rs = pstmt.executeQuery();
+            
+            if(rs.next())
+            {
+                    temp = new BoardDataBean();
+                 temp.setNum(rs.getInt("num"));
+                 temp.setBoardid(rs.getString("boardid"));
+                 temp.setWriter(rs.getString("writer"));
+                 temp.setEmail(rs.getString("email"));
+                 temp.setSubject(rs.getString("subject"));
+                 temp.setPasswd(rs.getString("passwd"));
+                 temp.setReg_date(rs.getTimestamp("reg_date"));
+                 temp.setReadcount(rs.getInt("readcount"));
+                 temp.setRef(rs.getInt("ref"));
+                 temp.setRe_step(rs.getInt("re_step"));
+                 temp.setRe_level(rs.getInt("re_level"));
+                 temp.setContent(rs.getString("content"));
+                 temp.setIp(rs.getString("ip"));
+                 temp.setFilename(rs.getString("filename"));
+                 temp.setFilesize(rs.getInt("filesize"));
+               
+            
+            }
+            
+        }catch (Exception ex) {
+           ex.printStackTrace();
+        }finally {
+            if(rs != null) try{ rs.close();} catch(SQLException ex) {}
+            if(pstmt != null) try{ pstmt.close();} catch(SQLException ex) {}
+            if(conn != null) try{ conn.close();} catch(SQLException ex) {}
+        }
+        
+        return temp;
     }
 }
