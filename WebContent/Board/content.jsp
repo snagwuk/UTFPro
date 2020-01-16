@@ -4,14 +4,7 @@
     pageEncoding="UTF-8"%>
     <% 
 request.setCharacterEncoding("UTF-8");
-String pageNum = request.getParameter("pageNum");
 int num = Integer.parseInt(request.getParameter("num"));
-
-
-if(pageNum == null || pageNum.equals(""))
-{
-    pageNum="1";
-}
 
 BoardDao dbPro = BoardDao.getInstance();
 BoardDataBean article = dbPro.getArticle(num);
@@ -27,7 +20,7 @@ BoardDataBean article = dbPro.getArticle(num);
 </head>
 <body>
 <div class="container w3-display-topmiddle">
-<br><br> <p align="center">글내용 보기</p>
+<br><br> <p align="center">글내용 보기 <%=session.getAttribute("pageNum") %></p>
 <table class = "w3-table-all">
 <tr>
 	<td align="center">글번호</td>
@@ -56,10 +49,10 @@ BoardDataBean article = dbPro.getArticle(num);
 </tr>
 <tr height="30">
 	<td colspan="4" class="w3-center">
-	<input type="button" value="글수정" onClick="document.location.href='updateForm.jsp'">&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="button" value="글삭제" onClick="document.location.href='deleteForm.jsp'">&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="button" value="답글쓰기" onClick="document.location.href='writeForm.jsp'">&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="button" value="글목록" onClick="document.location.href='list.jsp?pageNum=<%=pageNum%>'">
+	<input type="button" value="글수정" onClick="document.location.href='updateForm.jsp?num=<%=article.getNum()%>'">&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="button" value="글삭제" onClick="document.location.href='deleteForm.jsp?num=<%=article.getNum()%>'">&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="button" value="답글쓰기" onClick="document.location.href='writeForm.jsp?num=<%=article.getNum()%>&ref=<%=article.getRef()%>&re_level=<%=article.getRe_level()%>&re_step=<%=article.getRe_step()%>'">&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="button" value="글목록" onClick="document.location.href='list.jsp'">
 	 </td>
 </tr>
 </table>

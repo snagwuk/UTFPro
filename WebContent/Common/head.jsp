@@ -5,6 +5,7 @@
 
 			if (request.getParameter("boardid") != null && !request.getParameter("boardid").equals(""))
 				session.setAttribute("boardid", request.getParameter("boardid"));
+				session.setAttribute("pageNum", 1);
 
 			String boardid = (String) session.getAttribute("boardid");
 			if (boardid == null || boardid.equals("")) {
@@ -75,7 +76,7 @@
 		<%
 		    }
 		%>
-		<span><%=session.getAttribute("boardid")%></span>
+		<span><%=session.getAttribute("boardid")%> : <%=session.getAttribute("pageNum")%></span>
 	</div>
 </body>
 </html>

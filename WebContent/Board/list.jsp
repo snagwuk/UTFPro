@@ -18,11 +18,20 @@ request.setCharacterEncoding("UTF-8");
 
 
 int pageSize=3;
-String pageNum = request.getParameter("pageNum");
-if(pageNum==null || pageNum.equals(""))
-    pageNum = "1";
+//String pageNum = request.getParameter("pageNum");
 
-int currentPage = Integer.parseInt(pageNum);
+
+int currentPage = 0;
+
+try{
+   currentPage = Integer.parseInt(request.getParameter("pageNum"));  
+   session.setAttribute("pageNum",currentPage);
+}catch(Exception e){
+    if(session.getAttribute("pageNum") == null) {
+        session.setAttribute("pageNum",1);
+    }
+}
+currentPage = (int)session.getAttribute("pageNum");
 int startRow = (currentPage-1)*pageSize +1;
 int endRow = startRow + pageSize -1 ;
 
@@ -40,7 +49,7 @@ int number = count-(currentPage-1)*pageSize;
 </p>
 <div class="w3-container">
 <span class="w3-center w3-Large">
-<h3> 게시판(전체글 :<%=count %>)</h3>
+<h3> 게시판(전체글 :<%=count %>) : <%=session.getAttribute("pageNum") %></h3>
 </span>
 <p class="w3-right w3-padding-right-Large"> <a href="writeForm.jsp">글쓰기</a></p>
 <%
@@ -71,7 +80,7 @@ int number = count-(currentPage-1)*pageSize;
 %>
 	<tr class="w3-yellow">
 		<td align="center"> <%=number-- %></td>
-		<td align="center"> <a href="<%=request.getContextPath()%>/Board/content.jsp?num=<%=article.getNum()%>&pageNum=<%=currentPage%>"><%=article.getSubject() %></td>
+		<td align="center"> <a href="<%=request.getContextPath()%>/Board/content.jsp?pageNum=<%=session.getAttribute("pageNum")%>&num=<%=article.getNum()%>"><%=article.getSubject() %></td>
 		<td align="center"> <%=article.getWriter() %></td>
 		<td align="center"> <%=sdf.format(article.getReg_date())%></td>
 		<td align="center"> <%=article.getReadcount() %></td>
