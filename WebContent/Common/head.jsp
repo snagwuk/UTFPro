@@ -3,10 +3,10 @@
 <%
     request.setCharacterEncoding("UTF-8");
 
-			if (request.getParameter("boardid") != null && !request.getParameter("boardid").equals(""))
+			if (request.getParameter("boardid") != null && !request.getParameter("boardid").equals("")){
 				session.setAttribute("boardid", request.getParameter("boardid"));
 				session.setAttribute("pageNum", 1);
-
+			}
 			String boardid = (String) session.getAttribute("boardid");
 			if (boardid == null || boardid.equals("")) {
 				boardid = "1";
@@ -32,11 +32,17 @@
 			atag[4].className += " w3-red";
 		else if (url[url.length - 1] == "loginForm.jsp")
 			atag[7].className += " w3-red";
-		else if (1 == <%=session.getAttribute("boardid")%>)
+		else if (1 ==
+<%=session.getAttribute("boardid")%>
+	)
 			atag[1].className += " w3-red";
-		else if (2 == <%=session.getAttribute("boardid")%>)
+		else if (2 ==
+<%=session.getAttribute("boardid")%>
+	)
 			atag[2].className += " w3-red";
-		else if (3 == <%=session.getAttribute("boardid")%>)
+		else if (3 ==
+<%=session.getAttribute("boardid")%>
+	)
 			atag[3].className += " w3-red";
 
 	}

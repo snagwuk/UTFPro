@@ -16,35 +16,37 @@
 <% 
 request.setCharacterEncoding("UTF-8");
 
-
 int pageSize=3;
-//String pageNum = request.getParameter("pageNum");
 
-
-int currentPage = 0;
-
+int currentPage=0;
 try{
-   currentPage = Integer.parseInt(request.getParameter("pageNum"));  
-   session.setAttribute("pageNum",currentPage);
+	//유효하지않으면 입셉션처리
+	currentPage=Integer.parseInt(request.getParameter("pageNum"));
+	session.setAttribute("pageNum",currentPage);
 }catch(Exception e){
-    if(session.getAttribute("pageNum") == null) {
-        session.setAttribute("pageNum",1);
-    }
-}
-currentPage = (int)session.getAttribute("pageNum");
-int startRow = (currentPage-1)*pageSize +1;
-int endRow = startRow + pageSize -1 ;
+	if(session.getAttribute("pageNum")==null){
+		session.setAttribute("pageNum",1);
+	}
+}	
 
-BoardDao service = BoardDao.getInstance();
-int count = service.getArticleCount(boardid);
-List<BoardDataBean> li = service.getArticle(startRow,endRow,boardid);
-SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
-int number = count-(currentPage-1)*pageSize;
+currentPage=(int)session.getAttribute("pageNum");
+BoardDao service=BoardDao.getInstance();
+int count=service.getArticleCount(boardid);
 
+int temp = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+if(currentPage > temp )
+    currentPage = temp;
 
-
-
+int startRow=(currentPage-1)*pageSize+1;
+int endRow=startRow+pageSize-1;
+List<BoardDataBean> li =service.getArticle(startRow,endRow, boardid);
+SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+int number=count-(currentPage-1)*pageSize;
 %>
+
+
+
+
 <p class="w3-left" style="padding-left:30px;">
 </p>
 <div class="w3-container">
@@ -80,7 +82,19 @@ int number = count-(currentPage-1)*pageSize;
 %>
 	<tr class="w3-yellow">
 		<td align="center"> <%=number-- %></td>
-		<td align="center"> <a href="<%=request.getContextPath()%>/Board/content.jsp?pageNum=<%=session.getAttribute("pageNum")%>&num=<%=article.getNum()%>"><%=article.getSubject() %></td>
+		<td align="center">
+		<%
+			int wid = 0;
+		if(article.getRe_level() > 0) {
+		    wid = 10 * (article.getRe_level());
+		
+		%>
+		<img src="<%=request.getContextPath()%>/img/level.gif" width="<%=wid %>" height="16">
+		<img src="<%=request.getContextPath()%>/img/re.gif">
+		<%} else { %>
+		<img src="<%=request.getContextPath()%>/img/level.gif" width="<%=wid %>" height="16">
+		<%} %>
+		 <a href="<%=request.getContextPath()%>/Board/content.jsp?pageNum=<%=session.getAttribute("pageNum")%>&num=<%=article.getNum()%>"><%=article.getSubject() %></td>
 		<td align="center"> <%=article.getWriter() %></td>
 		<td align="center"> <%=sdf.format(article.getReg_date())%></td>
 		<td align="center"> <%=article.getReadcount() %></td>
