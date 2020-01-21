@@ -26,6 +26,11 @@
 		//alert(url[url.length-1]);
 		if (url[url.length - 1] == "main.jsp")
 			atag[0].className += " w3-red";
+		else if (url[url.length - 1] == "bar_sample.jsp")
+			atag[5].className += " w3-red";
+		else if (url[url.length - 1] == "awesomeCloud.jsp")
+			atag[6].className += " w3-red";
+
 		else if (url[url.length - 1] == "index.jsp")
 			atag[1].className += " w3-red";
 		else if (url[url.length - 1] == "inputForm.jsp")
@@ -60,8 +65,9 @@
 			class="w3-bar-item w3-button"> Q&A </a> <a
 			href="<%=request.getContextPath()%>/MVC/inputForm.jsp"
 			class="w3-bar-item w3-button"> 회원가입 </a> <a
-			href="<%=request.getContextPath()%>/#" class="w3-bar-item w3-button">
-			BarGraph </a> <a href="<%=request.getContextPath()%>/#"
+			href="<%=request.getContextPath()%>/Graph/bar_sample.jsp"
+			class="w3-bar-item w3-button"> BarGraph </a> <a
+			href="<%=request.getContextPath()%>/Graph/awesomeCloud.jsp"
 			class="w3-bar-item w3-button"> WordCloud </a>
 
 		<%

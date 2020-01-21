@@ -8,16 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardDao
+public class BoardDaoOracle
 {
-    private static BoardDao instance = new BoardDao();
+    private static BoardDaoOracle instance = new BoardDaoOracle();
     
-    public static BoardDao getInstance()
+    public static BoardDaoOracle getInstance()
     {
         return instance;
     }
     
-    private BoardDao()
+    private BoardDaoOracle()
     {
     }
     
@@ -27,10 +27,10 @@ public class BoardDao
         Connection conn = null;
         try
         {
-            String jdbcUrl = "jdbc:mysql://localhost:3306/jspdb";
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
             String dbId = "scott";
             String dbpass = "1111";
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("oracle.jdbc.driver.OracleDriver");
             conn = DriverManager.getConnection(jdbcUrl, dbId, dbpass);
         }
         catch (Exception e)
@@ -58,7 +58,7 @@ public class BoardDao
         try
         {
             conn = getConnection();
-            pstmt = conn.prepareStatement("select max(num)+1 from board");
+            pstmt = conn.prepareStatement("select BoardSer.nextval from dual");
             rs = pstmt.executeQuery();
             if(rs.next())
                 number = rs.getInt(1);
@@ -76,8 +76,8 @@ public class BoardDao
             else
                 ref=number;
             
-
-            pstmt = conn.prepareStatement("insert into board values (?,?,?,?,?,?,now(),0,?,?,?,?,?,?,?)");
+            
+            pstmt = conn.prepareStatement("insert into board values (?,?,?,?,?,?,sysdate,0,?,?,?,?,?,'',0)");
             pstmt.setInt(1, number);
             pstmt.setString(2, article.getBoardid());
             pstmt.setString(3, article.getWriter());
@@ -91,10 +91,6 @@ public class BoardDao
             
             pstmt.setString(10, article.getContent());
             pstmt.setString(11, article.getIp());
-            
-            pstmt.setString(12, article.getFilename());
-            pstmt.setInt(13, article.getFilesize());
-            
             
             pstmt.executeUpdate();
             
