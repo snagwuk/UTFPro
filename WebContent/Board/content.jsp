@@ -47,6 +47,10 @@ BoardDataBean article = dbPro.getArticle(num);
 	<td align="center">글내용</td>
 	<td align="left" colspan="3"><pre><%=article.getContent()%></pre></td>
 </tr>
+<tr  height="30">
+	<td align="center">첨부파일</td>
+	<td align="left" colspan="3"><img alt="" src="<%=request.getContextPath()%>/uploadFile/<%=article.getFilename()%>"></td>
+</tr>
 <tr height="30">
 	<td colspan="4" class="w3-center">
 	<input type="button" value="글수정" onClick="document.location.href='updateForm.jsp?num=<%=article.getNum()%>'">&nbsp;&nbsp;&nbsp;&nbsp;

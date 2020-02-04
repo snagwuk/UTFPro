@@ -16,58 +16,65 @@
 </head>
 <body>
 
-	<%    
-	
-	request.setCharacterEncoding("utf-8");   
-	
-	String realFolder = "";
-	String saveFolder = "uploadFile";
-	String encType="UTF-8";
-	int maxSize = 10*1024*1024;
-	ServletContext context = getServletContext();
-	realFolder = context.getRealPath(saveFolder);
-	
-	try{
+	<%
+	    request.setCharacterEncoding("utf-8");
 	    
-	    MultipartRequest multi = new MultipartRequest(request,realFolder,maxSize,encType,new DefaultFileRenamePolicy());
-	    BoardDataBean article = new BoardDataBean();
-	    Enumeration files = multi.getFileNames();
-	    if(files.hasMoreElements())
+	    String realFolder = "";
+	    String saveFolder = "uploadFile";
+	    String encType = "UTF-8";
+	    int maxSize = 10 * 1024 * 1024;
+	    ServletContext context = getServletContext();
+	    realFolder = context.getRealPath(saveFolder);
+	    
+	    try
 	    {
-	        String name = (String)files.nextElement();
-	        File file = multi.getFile(name);
-	        article.setFilename(file.getName());
-	        article.setFilesize((int)file.length());
 	        
+	        MultipartRequest multi = new MultipartRequest(request,
+	                realFolder, maxSize, encType,
+	                new DefaultFileRenamePolicy());
+	        BoardDataBean article = new BoardDataBean();
+	        Enumeration files = multi.getFileNames();
+	        if (files.hasMoreElements())
+	        {
+	            String name = (String) files.nextElement();
+	            File file = multi.getFile(name);
+	            if (file != null)
+	            {
+	                article.setFilename(file.getName());
+	                article.setFilesize((int) file.length());
+	            }
+	            else
+	            {
+	                article.setFilename("");
+	                article.setFilesize(0);
+	            }
+	            
+	        }
+	        
+	        article.setNum(Integer.parseInt(multi.getParameter("num")));
+	        article.setRef(Integer.parseInt(multi.getParameter("ref")));
+	        article.setRe_step(Integer
+	                .parseInt(multi.getParameter("re_step")));
+	        article.setRe_level(Integer
+	                .parseInt(multi.getParameter("re_level")));
+	        
+	        article.setWriter(multi.getParameter("writer"));
+	        article.setContent(multi.getParameter("content"));
+	        article.setPasswd(multi.getParameter("passwd"));
+	        article.setSubject(multi.getParameter("subject"));
+	        article.setEmail(multi.getParameter("email"));
+	        article.setBoardid((String) session.getAttribute("boardid"));
+	        article.setIp(request.getRemoteAddr());
+	        
+	        BoardDao service = BoardDao.getInstance();
+	        service.insertArticle(article);
 	    }
-	    else
+	    catch (Exception e)
 	    {
-	        article.setFilename("");
-	        article.setFilesize(0);
+	        e.printStackTrace();
 	    }
-	    
-	    article.setNum(Integer.parseInt(multi.getParameter("num")));
-	    article.setRef(Integer.parseInt(multi.getParameter("ref")));
-	    article.setRe_step(Integer.parseInt(multi.getParameter("re_step")));
-	    article.setRe_level(Integer.parseInt(multi.getParameter("re_level")));
-	    
-	    article.setWriter(multi.getParameter("writer"));
-	    article.setContent(multi.getParameter("content"));
-	    article.setPasswd(multi.getParameter("passwd"));
-	    article.setSubject(multi.getParameter("subject"));
-	    article.setEmail(multi.getParameter("email"));
-	    article.setBoardid((String)session.getAttribute("boardid"));
-	    article.setIp(request.getRemoteAddr());
-	    
-	    BoardDao service = BoardDao.getInstance();
-	    service.insertArticle(article);
-	}catch(Exception e)
-	{
-	    e.printStackTrace();
-	}
-	response.sendRedirect(request.getContextPath() +"/Board/list.jsp");
-
-%>
-<!-- <meta http-equiv="Refresh" content="0;url=list.jsp"> -->
+	    response.sendRedirect(request.getContextPath() + "/Board/list.jsp");
+	%>
+	<!-- <meta http-equiv="Refresh" content="0;url=list.jsp"> -->
 </body>
 </html>

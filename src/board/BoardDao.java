@@ -134,7 +134,7 @@ public class BoardDao
         {
             conn = getConnection();
             pstmt = conn
-                    .prepareStatement("select nvl(count(*),0) from board where boardid = ?");
+                    .prepareStatement("select ifnull(count(*),0) from board where boardid = ?");
             pstmt.setString(1, boardid);
             rs = pstmt.executeQuery();
             if (rs.next())
@@ -181,15 +181,22 @@ public class BoardDao
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         List<BoardDataBean> articleList = null;
+        
+        
+        startRow = startRow -1 ;
+        endRow = endRow - startRow;
+        System.out.println("dao==="+startRow +":" + endRow + ":" + boardid);
+        
         try
         {
             conn = getConnection();
             
             // pstmt = conn.prepareStatement("select * from board where boardid
             // = ?");
-            String sql = " select * from( " + " select rownum rnum, a.* from( "
+           /* String sql = " select * from( " + " select rownum rnum, a.* from( "
                     + " select * from board where boardid=? order by ref desc , re_step) a) "
-                    + " where rnum between ? and ? ";
+                    + " where rnum between ? and ? ";*/
+            String sql = " select * from board where boardid= ? order by ref desc , re_step limit ? , ? " ;
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, boardid);
             pstmt.setInt(2, startRow);

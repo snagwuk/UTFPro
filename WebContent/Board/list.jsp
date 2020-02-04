@@ -53,7 +53,7 @@ int number=count-(currentPage-1)*pageSize;
 <span class="w3-center w3-Large">
 <h3> 게시판(전체글 :<%=count %>) : <%=session.getAttribute("pageNum") %></h3>
 </span>
-<p class="w3-right w3-padding-right-Large"> <a href="writeForm.jsp">글쓰기</a></p>
+<p class="w3-right w3-padding-right-Large"> <a href="writeUploadForm.jsp">글쓰기</a></p>
 <%
 	if(count == 0) {
 %>
@@ -73,6 +73,8 @@ int number=count-(currentPage-1)*pageSize;
 	<td align="center"> 작성일</td>
 	<td align="center"> 조회</td>
 	<td align="center"> IP</td>
+	<td align="center"> filename</td>
+	<td align="center"> filesize</td>
 </tr>
 <%
 	for(int i = 0; i < li.size(); i++) 
@@ -99,6 +101,8 @@ int number=count-(currentPage-1)*pageSize;
 		<td align="center"> <%=sdf.format(article.getReg_date())%></td>
 		<td align="center"> <%=article.getReadcount() %></td>
 		<td align="center"> <%=article.getIp() %></td>
+		<td align="center"> <%=article.getFilename() %></td>
+		<td align="center"> <%=article.getFilesize() %></td>
 	</tr>
 <%
 	}
