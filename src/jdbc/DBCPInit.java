@@ -29,6 +29,7 @@ public class DBCPInit extends HttpServlet
         }catch (ClassNotFoundException ex) {
             throw new RuntimeException("fail to load JDBC Driver",ex);
         }
+        
     }
     
     private void   initConnectionPool()
